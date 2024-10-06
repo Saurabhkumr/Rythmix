@@ -1,12 +1,10 @@
-import React from "react";
-import Sidebar from "./Sidebar";
+import Layout from "./Layout";
+import MainContent from "./MainContent";
 
-const HomePage = () => {
+export default function HomePage() {
   return (
-    <div>
-      <Sidebar />
-    </div>
+    <Layout>
+      <MainContent />
+    </Layout>
   );
-};
-
-export default HomePage;
+}

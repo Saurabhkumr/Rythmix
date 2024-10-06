@@ -1,35 +1,63 @@
-// src/components/Sidebar.js
-import React from "react";
-import { Link } from "react-router-dom";
+import { Box, Button, Typography } from "@mui/material";
+import {
+  Home,
+  Search,
+  LibraryAdd,
+  AddCircle,
+  Favorite,
+  ExitToApp,
+} from "@mui/icons-material";
 
-const Sidebar = () => {
+export default function Sidebar() {
   return (
-    <div className="w-[25%] h-full p-2 flex-col gap-2 text-white hidden lg:flex bg-[#121212]">
-      <div className="bg-[#121212] h-[15%] rounded flex flex-col justify-around p-4">
-        <Link
-          to="/home"
-          className="flex items-center gap-3 pl-8 cursor-pointer"
+    <Box sx={{ width: 250, bgcolor: "#212121", color: "white" }}>
+      <Box sx={{ p: 2 }}>
+        <Typography variant="h5" sx={{ mb: 3 }}>
+          Rythmix
+        </Typography>
+        <nav>
+          <Button
+            sx={{ color: "gray", justifyContent: "start", width: "100%" }}
+          >
+            <Home sx={{ mr: 1 }} />
+            Home
+          </Button>
+          <Button
+            sx={{ color: "gray", justifyContent: "start", width: "100%" }}
+          >
+            <Search sx={{ mr: 1 }} />
+            Search
+          </Button>
+          <Button
+            sx={{ color: "gray", justifyContent: "start", width: "100%" }}
+          >
+            <LibraryAdd sx={{ mr: 1 }} />
+            Your Library
+          </Button>
+        </nav>
+      </Box>
+      <Box sx={{ p: 2 }}>
+        <Button
+          variant="outlined"
+          sx={{ justifyContent: "start", width: "100%", color: "gray" }}
         >
-          <img src="path/to/home-icon.svg" alt="Home" />
-          <p className="font-bold text-white">Home</p>
-        </Link>
-        <Link
-          to="/playlists"
-          className="flex items-center gap-3 pl-8 cursor-pointer"
+          <AddCircle sx={{ mr: 1 }} />
+          Create Playlist
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{ justifyContent: "start", width: "100%", color: "gray", mt: 1 }}
         >
-          <img src="path/to/playlist-icon.svg" alt="Playlists" />
-          <p className="font-bold text-white">Playlists</p>
-        </Link>
-        <Link
-          to="/search"
-          className="flex items-center gap-3 pl-8 cursor-pointer"
-        >
-          <img src="path/to/search-icon.svg" alt="Search" />
-          <p className="font-bold text-white">Search</p>
-        </Link>
-      </div>
-    </div>
+          <Favorite sx={{ mr: 1 }} />
+          Liked Songs
+        </Button>
+      </Box>
+      <Box sx={{ p: 2, mt: "auto" }}>
+        <Button sx={{ color: "gray", justifyContent: "start" }}>
+          <ExitToApp sx={{ mr: 1 }} />
+          Log out
+        </Button>
+      </Box>
+    </Box>
   );
-};
-
-export default Sidebar;
+}
