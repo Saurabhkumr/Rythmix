@@ -1,4 +1,4 @@
-import { Button, Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 export default function MainContent() {
   return (
@@ -6,9 +6,22 @@ export default function MainContent() {
       <Typography variant="h4" sx={{ mb: 3, color: "white" }}>
         Good afternoon
       </Typography>
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2, // gap between items
+          mb: 3,
+        }}
+      >
         {[1, 2, 3, 4, 5, 6].map((playlist) => (
-          <Grid item xs={6} md={4} key={playlist}>
+          <Box
+            key={playlist}
+            sx={{
+              flex: "1 1 calc(33.33% - 16px)", // 3 items per row with gap
+              maxWidth: "calc(33.33% - 16px)", // same width as flex
+            }}
+          >
             <Button
               variant="contained"
               sx={{
@@ -25,16 +38,28 @@ export default function MainContent() {
               />
               <span style={{ color: "white" }}>Playlist {playlist}</span>
             </Button>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       <Typography variant="h4" sx={{ mb: 3, color: "white" }}>
         Made for you
       </Typography>
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+        }}
+      >
         {[1, 2, 3, 4, 5].map((playlist) => (
-          <Grid item xs={6} md={4} lg={3} key={playlist}>
+          <Box
+            key={playlist}
+            sx={{
+              flex: "1 1 calc(25% - 16px)", // 4 items per row with gap
+              maxWidth: "calc(25% - 16px)",
+            }}
+          >
             <Box
               sx={{
                 bgcolor: "#333",
@@ -60,9 +85,9 @@ export default function MainContent() {
                 Your daily music mix
               </Typography>
             </Box>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
     </Box>
   );
 }
