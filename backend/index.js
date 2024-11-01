@@ -2,11 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 var JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
+const authRoutes = require("./routes/auth");
+const songRoutes = require("./routes/song");
 const passport = require("passport");
 const User = require("./models/User");
+
+app.use(express.json());
 
 mongoose
   .connect(
@@ -19,28 +23,32 @@ mongoose
     console.error("Error while connecting to MongoDB:", err.message);
   });
 
-let opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = "thisiskey";
+let opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "thisissecretkey",
+};
+
 passport.use(
-  new JwtStrategy(opts, function (jwt_payload, done) {
-    User.findOne({ id: jwt_payload.sub }, function (err, user) {
-      if (err) {
-        return done(err, false);
-      }
+  new JwtStrategy(opts, async (jwt_payload, done) => {
+    try {
+      const user = await User.findOne({ id: jwt_payload.sub });
       if (user) {
         return done(null, user);
       } else {
         return done(null, false);
-        // or you could create a new account
       }
-    });
+    } catch (err) {
+      return done(err, false);
+    }
   })
 );
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
+
+app.use("/auth", authRoutes);
+app.use("/song", songRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}...`);
