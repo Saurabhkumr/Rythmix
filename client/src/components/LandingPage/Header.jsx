@@ -1,38 +1,42 @@
 import React from "react";
 import { Music } from "lucide-react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import Login from "../Routes/Login";
 
 const Header = () => {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center border-b border-blue-900/50">
-      <a className="flex items-center justify-center" href="#">
+      <Link className="flex items-center justify-center" to="/">
+        {" "}
+        {/* Use Link for Home */}
         <Music className="h-6 w-6 text-blue-500" />
         <span className="ml-2 text-2xl font-bold text-blue-500">Rythmix</span>
-      </a>
+      </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6">
-        <a
+        <Link
           className="text-sm font-medium hover:text-blue-500 transition-colors"
-          href="#"
+          to="/features" // Replace href with to for Link
         >
           Features
-        </a>
-        <a
+        </Link>
+        <Link
           className="text-sm font-medium hover:text-blue-500 transition-colors"
-          href="#"
+          to="/pricing" // Replace href with to for Link
         >
           Pricing
-        </a>
-        <a
+        </Link>
+        <Link
           className="text-sm font-medium hover:text-blue-500 transition-colors"
-          href="#"
+          to="/about" // Replace href with to for Link
         >
           About
-        </a>
-        <a
+        </Link>
+        <Link
           className="text-sm font-medium hover:text-blue-500 transition-colors"
-          href="#"
+          to="/login" // Link to the /login route
         >
-          Sign In
-        </a>
+          Login
+        </Link>
       </nav>
     </header>
   );

@@ -1,4 +1,3 @@
-import { Box, Button, Typography } from "@mui/material";
 import {
   Home,
   Search,
@@ -10,54 +9,40 @@ import {
 
 export default function Sidebar() {
   return (
-    <Box sx={{ width: 250, bgcolor: "#212121", color: "white" }}>
-      <Box sx={{ p: 2 }}>
-        <Typography variant="h5" sx={{ mb: 3 }}>
-          Rythmix
-        </Typography>
-        <nav>
-          <Button
-            sx={{ color: "gray", justifyContent: "start", width: "100%" }}
-          >
-            <Home sx={{ mr: 1 }} />
+    <div className="w-64 bg-black text-white flex flex-col">
+      <div className="p-4">
+        <h1 className="text-xl font-semibold mb-6">Rythmix</h1>
+        <nav className="space-y-2">
+          <button className="flex items-center text-gray-400 w-full text-left hover:text-white">
+            <Home className="mr-2" />
             Home
-          </Button>
-          <Button
-            sx={{ color: "gray", justifyContent: "start", width: "100%" }}
-          >
-            <Search sx={{ mr: 1 }} />
+          </button>
+          <button className="flex items-center text-gray-400 w-full text-left hover:text-white">
+            <Search className="mr-2" />
             Search
-          </Button>
-          <Button
-            sx={{ color: "gray", justifyContent: "start", width: "100%" }}
-          >
-            <LibraryAdd sx={{ mr: 1 }} />
+          </button>
+          <button className="flex items-center text-gray-400 w-full text-left hover:text-white">
+            <LibraryAdd className="mr-2" />
             Your Library
-          </Button>
+          </button>
         </nav>
-      </Box>
-      <Box sx={{ p: 2 }}>
-        <Button
-          variant="outlined"
-          sx={{ justifyContent: "start", width: "100%", color: "gray" }}
-        >
-          <AddCircle sx={{ mr: 1 }} />
+      </div>
+      <div className="p-4 space-y-2">
+        <button className="flex items-center w-full text-left text-gray-400 border border-gray-400 rounded p-2 hover:text-white hover:border-white">
+          <AddCircle className="mr-2" />
           Create Playlist
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ justifyContent: "start", width: "100%", color: "gray", mt: 1 }}
-        >
-          <Favorite sx={{ mr: 1 }} />
+        </button>
+        <button className="flex items-center w-full text-left text-gray-400 border border-gray-400 rounded p-2 hover:text-white hover:border-white">
+          <Favorite className="mr-2" />
           Liked Songs
-        </Button>
-      </Box>
-      <Box sx={{ p: 2, mt: "auto" }}>
-        <Button sx={{ color: "gray", justifyContent: "start" }}>
-          <ExitToApp sx={{ mr: 1 }} />
+        </button>
+      </div>
+      <div className="p-4">
+        <button className="flex items-center text-gray-400 w-full text-left hover:text-white">
+          <ExitToApp className="mr-2" />
           Log out
-        </Button>
-      </Box>
-    </Box>
+        </button>
+      </div>
+    </div>
   );
 }

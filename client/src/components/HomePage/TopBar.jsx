@@ -1,50 +1,28 @@
-import { Box, Button } from "@mui/material";
 import { SkipPrevious, SkipNext } from "@mui/icons-material";
-import { useState } from "react";
-import LogInPage from "./LoginInPage"; // Adjust the path as necessary
-import SignUpPage from "./SignUpPage"; // Adjust the path as necessary
+import { Link } from "react-router-dom";
 
 export default function TopBar() {
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignUp, setOpenSignUp] = useState(false);
-
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        p: 2,
-        bgcolor: "#212121",
-      }}
-    >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Button variant="text" sx={{ color: "gray" }}>
+    <div className="flex justify-between p-4 bg-gray-900">
+      <div className="flex items-center">
+        <button className="text-gray-400 hover:text-white">
           <SkipPrevious />
-        </Button>
-        <Button variant="text" sx={{ color: "gray" }}>
+        </button>
+        <button className="text-gray-400 hover:text-white ml-2">
           <SkipNext />
-        </Button>
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Button
-          variant="text"
-          sx={{ color: "gray" }}
-          onClick={() => setOpenSignUp(true)} // Open sign-up overlay
-        >
+        </button>
+      </div>
+      <div className="flex items-center">
+        <Link to="/signup" className="text-gray-400 hover:text-white">
           Sign up
-        </Button>
-        <Button
-          variant="contained"
-          sx={{ bgcolor: "white", color: "#212121" }}
-          onClick={() => setOpenLogin(true)} // Open login overlay
+        </Link>
+        <Link
+          to="/login"
+          className="bg-white text-gray-900 ml-4 px-4 py-1 rounded-2xl hover:bg-gray-200"
         >
           Log in
-        </Button>
-      </Box>
-
-      {/* Overlay Components */}
-      <LogInPage isOpen={openLogin} onClose={() => setOpenLogin(false)} />
-      <SignUpPage isOpen={openSignUp} onClose={() => setOpenSignUp(false)} />
-    </Box>
+        </Link>
+      </div>
+    </div>
   );
 }
