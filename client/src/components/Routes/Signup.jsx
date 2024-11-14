@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { makeUnauthenticatedPostRequest } from "../utils/serverHelper";
+import { useCookies } from "react-cookie";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -8,15 +10,36 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [cookie, setCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add signup logic here
-    console.log("Username:", username);
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const signUpReq = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    const data = { email, password, username, firstName, lastName };
+    try {
+      const response = await makeUnauthenticatedPostRequest(
+        "/auth/register",
+        data
+      );
+      if (response && !response.err) {
+        console.log(response);
+        const token = response.token;
+        const date = new Date();
+        date.setDate(date.getDate() + 30);
+        setCookie("token", token, { path: "/", expires: date });
+        alert("Registration successful!");
+        navigate("/home");
+      } else {
+        alert("Registration failed.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -25,7 +48,7 @@ const Signup = () => {
         <h2 className="text-2xl font-bold text-center text-gray-700">
           Sign Up
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div>
             <label
               htmlFor="username"
@@ -33,7 +56,6 @@ const Signup = () => {
             >
               Username
             </label>
-
             <input
               type="text"
               id="username"
@@ -134,6 +156,7 @@ const Signup = () => {
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
+            onClick={signUpReq}
           >
             Sign Up
           </button>

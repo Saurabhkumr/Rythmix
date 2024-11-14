@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Home,
   Search,
@@ -5,9 +6,14 @@ import {
   AddCircle,
   Favorite,
   ExitToApp,
+  LibraryMusic,
 } from "@mui/icons-material";
+import { useCookies } from "react-cookie";
 
 export default function Sidebar() {
+  const [cookies] = useCookies(["token"]);
+  const isLoggedIn = !!cookies.token; // Check if the token exists in cookies
+
   return (
     <div className="w-64 bg-black text-white flex flex-col">
       <div className="p-4">
@@ -25,6 +31,12 @@ export default function Sidebar() {
             <LibraryAdd className="mr-2" />
             Your Library
           </button>
+          {isLoggedIn && (
+            <button className="flex items-center text-gray-400 w-full text-left hover:text-white">
+              <LibraryMusic className="mr-2" />
+              My Music
+            </button>
+          )}
         </nav>
       </div>
       <div className="p-4 space-y-2">

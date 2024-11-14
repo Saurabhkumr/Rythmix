@@ -1,22 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { makeUnauthenticatedPostRequest } from "../utils/serverHelper";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookie, setCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const loginReq = async (e) => {
     e.preventDefault();
-    // Add login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+    const data = { email, password };
+    try {
+      const response = await makeUnauthenticatedPostRequest(
+        "/auth/login",
+        data
+      );
+      if (response && response.token) {
+        console.log("Login response:", response);
+        const userName = response.userName || "User";
+        const token = response.token;
+        const date = new Date();
+        date.setDate(date.getDate() + 30);
+
+        setCookie("token", token, { path: "/", expires: date });
+        setCookie("userName", userName, { path: "/", expires: date });
+
+        alert("Login successful!");
+        navigate("/home");
+      } else {
+        console.error("Invalid credentials");
+        alert("Login failed. Invalid credentials.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={loginReq} className="space-y-6">
           <div>
             <label
               htmlFor="email"

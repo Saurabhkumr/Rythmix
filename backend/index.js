@@ -10,6 +10,9 @@ const songRoutes = require("./routes/song");
 const playlistRoutes = require("./routes/playlist");
 const passport = require("passport");
 const User = require("./models/User");
+const cors = require("cors");
+
+app.use(cors());
 
 app.use(express.json());
 
